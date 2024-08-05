@@ -1,18 +1,32 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 from loginPage.login_page_test import LoginPage, LoginPage1
+from selenium.webdriver.chrome.options import Options
 
 
 # To run on normal browser
+
+
 @pytest.fixture(scope="module")
 def driver_setup():
-    driver = webdriver.Chrome()
-    driver.implicitly_wait(20)
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Run Chrome in headless mode
+    chrome_options.add_argument("--disable-gpu")  # Disable GPU acceleration (to avoid errors in headless mode)
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.implicitly_wait(30)
     driver.maximize_window()
     yield driver
     driver.quit()
+
+
+# @pytest.fixture(scope="module")
+# def driver_setup():
+#   driver = webdriver.Chrome()
+#  driver.implicitly_wait(20)
+# driver.maximize_window()
+# yield driver
+# driver.quit()
 
 
 @pytest.fixture(scope="module")
@@ -29,10 +43,22 @@ def test_login_page_on_sauce_demo_website(login):
     login.click_login_button()
 
 
+# @pytest.fixture(scope="module")
+# def driver_setup1():
+#   driver = webdriver.Chrome()
+#  driver.implicitly_wait(20)
+# driver.maximize_window()
+# yield driver
+# driver.quit()
+
+
 @pytest.fixture(scope="module")
 def driver_setup1():
-    driver = webdriver.Chrome()
-    driver.implicitly_wait(20)
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Run Chrome in headless mode
+    chrome_options.add_argument("--disable-gpu")  # Disable GPU acceleration (to avoid errors in headless mode)
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.implicitly_wait(30)
     driver.maximize_window()
     yield driver
     driver.quit()
